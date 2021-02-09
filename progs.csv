@@ -83,3 +83,5 @@ G,https://github.com/dfu-programmer/dfu-programmer.git,QMK-programmer
 ,entr,auto run command on save
 ,networkmanager,NetworkManager
 ,rsync,rsync
+,pass,passmanager
+A,tomb-git,Tomb
