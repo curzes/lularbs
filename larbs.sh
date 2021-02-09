@@ -127,14 +127,18 @@ installationloop() { \
 	done < /tmp/progs.csv ;}
 
 putgitrepo() { # Downloads a gitrepo $1 and places the files in $2 only overwriting conflicts
-	dialog --infobox "Downloading and installing config files..." 4 60
-	[ -z "$3" ] && branch="master" || branch="$repobranch"
-	dir=$(mktemp -d)
-	[ ! -d "$2" ] && mkdir -p "$2"
-	chown -R "$name":wheel "$dir" "$2"
-	sudo -u "$name" git clone --recursive -b "$branch" --depth 1 "$1" "$dir" >/dev/null 2>&1
-	sudo -u "$name" cp -rfT "$dir" "$2"
-	}
+
+	# putgitrepo "$dotfilesrepo" "/home/$name" "$repobranch"
+
+	# dialog --infobox "Downloading and installing config files..." 4 60
+	# [ -z "$3" ] && branch="master" || branch="$repobranch"
+	# dir=$(mktemp -d)
+	# [ ! -d "$2" ] && mkdir -p "$2"
+	# chown -R "$name":wheel "$dir" "$2"
+	# sudo -u "$name" git clone --recursive -b "$branch" --depth 1 "$1" "$dir" >/dev/null 2>&1
+	# sudo -u "$name" cp -rfT "$dir" "$2"
+
+}
 
 systembeepoff() { dialog --infobox "Getting rid of that retarded error beep sound..." 10 50
 	rmmod pcspkr

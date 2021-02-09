@@ -3,18 +3,17 @@
 ,xorg-xwininfo,allows querying information about windows.
 ,xorg-xinit,starts the graphical server.
 ,ttf-linux-libertine,provides the sans and serif fonts for LARBS.
+,ttf-liberation,fonts
 A,lf-git,is an extensive terminal file manager that everyone likes.
 ,arandr,is a UI for screen adjustment.
 ,bc,is used for a dropdown calculator.
 ,calcurse,is a lightweight terminal-based calendar.
-,xcompmgr,is for transparency and removing screen-tearing.
 ,xorg-xprop,is a tool for detecting window properties.
 ,dosfstools,allows your computer to access dos-like filesystems.
 ,libnotify,allows desktop notifications.
 ,dunst,is a suckless notification system.
 ,exfat-utils,allows management of FAT drives.
 ,feh,is a minimalist image viewer.
-,xwallpaper,sets the wallpaper.
 ,ffmpeg,can record and splice video and audio on the command line.
 ,gnome-keyring,serves as the system keyring.
 A,gtk-theme-arc-gruvbox-git,gives the dark GTK theme used in LARBS.
@@ -25,7 +24,7 @@ A,gtk-theme-arc-gruvbox-git,gives the dark GTK theme used in LARBS.
 ,man-db,lets you read man pages of programs.
 ,ncmpcpp,a ncurses interface for music with multiple formats and a powerful tag editor.
 ,newsboat,is a terminal RSS client.
-A,brave-bin,"is an elegant browser with built-in adblocking, tor and other features."
+"A,brave-bin,""is an elegant browser with built-in adblocking, tor and other features."""
 ,noto-fonts-emoji,is an emoji font.
 ,ntfs-3g,allows accessing NTFS partitions.
 ,pulseaudio-alsa,is the audio system.
@@ -62,7 +61,7 @@ G,https://github.com/curzes/dmenu.git,runs commands and provides a UI for select
 G,https://github.com/curzes/st.git,is my custom build of suckless's terminal emulator.
 G,https://github.com/curzes/dwm.git,is the window manager.
 A,mutt-wizard-git,is a light-weight terminal-based email system.
-,slock,"allows you to lock your computer, and quickly unlock with your password."
+",slock,""allows you to lock your computer, and quickly unlock with your password."""
 ,firefox,browser
 ,python-pip,python installer
 ,ranger,filemanager
@@ -80,4 +79,7 @@ A,code-git,visual code
 ,arduino-avr-core,arduino shit
 ,arduide-git,arduino shit
 G,https://github.com/dfu-programmer/dfu-programmer.git,QMK-programmer
-,xcompmgr,transparent terminal
+,compton,transparent terminal
+,entr,auto run command on save
+,networkmanager,NetworkManager
+,rsync,rsync
