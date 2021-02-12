@@ -73,6 +73,27 @@ newperms() { # Set special sudoers settings for install (or after).
 	sed -i "/#LARBS/d" /etc/sudoers
 	echo "$* #LARBS" >> /etc/sudoers ;}
 
+bootloadersetup(){
+	pacman --noconfirm -S gptfdisk syslinux
+	syslinux-install_update -iam
+	sed -i 's/UI menu.c32/#UI menu.c32/g' /boot/syslinux/syslinux.cfg
+	sed -i 's/root=\/dev\/sda3 rw/cryptdevice=\/dev\/sda2:root root=\/dev\/mapper\/root rw quiet loglevel=3 vga=current/g' /boot/syslinux/syslinux.cfg
+	sed -i 's/block filesystems/block encrypt filesystems/g' /etc/mkinitcpio.conf
+	mkinitcpio -p linux
+}
+
+setlanguage(){
+	sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
+	sed -i 's/#en_US ISO-8859-1/en_US ISO-8859-1/g' /etc/locale.gen
+	sed -i 's/#sv_SE.UTF-8 UTF-8/sv_SE.UTF-8 UTF-8/g' /etc/locale.gen
+	sed -i 's/#sv_SE ISO-8859-1/sv_SE ISO-8859-1/g' /etc/locale.gen
+	locale-gen
+	echo KEYMAP=sv-latin1 > /etc/locale.conf
+	echo LANG=sv_SE.UTF-8 > /etc/locale.conf
+	export LANG=sv_SE.UTF-8
+	ln -s /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
+}
+
 manualinstall() { # Installs $1 manually if not installed. Used only for AUR helper here.
 	[ -f "/usr/bin/$1" ] || (
 	dialog --infobox "Installing \"$1\", an AUR helper..." 4 50
@@ -126,7 +147,7 @@ installationloop() { \
 		esac
 	done < /tmp/progs.csv ;}
 
-putgitrepo() { # Downloads a gitrepo $1 and places the files in $2 only overwriting conflicts
+# putgitrepo() { # Downloads a gitrepo $1 and places the files in $2 only overwriting conflicts
 
 	# putgitrepo "$dotfilesrepo" "/home/$name" "$repobranch"
 
@@ -138,7 +159,7 @@ putgitrepo() { # Downloads a gitrepo $1 and places the files in $2 only overwrit
 	# sudo -u "$name" git clone --recursive -b "$branch" --depth 1 "$1" "$dir" >/dev/null 2>&1
 	# sudo -u "$name" cp -rfT "$dir" "$2"
 
-}
+#}
 
 systembeepoff() { dialog --infobox "Getting rid of that retarded error beep sound..." 10 50
 	rmmod pcspkr
@@ -172,6 +193,11 @@ preinstallmsg || error "User exited."
 
 # Refresh Arch keyrings.
 refreshkeys || error "Error automatically refreshing Arch keyring. Consider doing so manually."
+
+# Setup bootloader
+bootloadersetup || erro "Error setup bootloader."
+
+setlanguage || error "Error seting up language."
 
 for x in curl base-devel git ntp zsh; do
 	dialog --title "LARBS Installation" --infobox "Installing \`$x\` which is required to install and configure other programs." 5 70
