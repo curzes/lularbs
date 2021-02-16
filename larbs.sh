@@ -162,7 +162,7 @@ putgitrepo() {
 
 	git clone --bare https://github.com/curzes/.dot-test.git /home/"$name"/.cfg
 
-	mkdir -p /home/"$name"/.config-backup
+	mkdir /home/"$name"/.config-backup
 
 	/usr/bin/git --git-dir=/home/"$name"/.cfg/ --work-tree=/home/"$name" checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} /home/"$name"/.config-backup/{}
 
@@ -171,7 +171,7 @@ putgitrepo() {
 
 	/usr/bin/git --git-dir=/home/"$name"/.cfg/ --work-tree=/home/"$name" remote set-url origin git@github.com:curzes/.dot-test.git
 
-	rm -rf /home/"$name"/.config-backup
+	# rm -rf /home/"$name"/.config-backup
 
 	mkdir /home/"$name"/Downloads
 	mkdir /home/"$name"/session
