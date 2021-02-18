@@ -160,21 +160,24 @@ putgitrepo() {
 
 	dialog --infobox "Downloading and installing config files..." 4 60
 
-	git clone --bare https://github.com/curzes/.dot-test.git /home/"$name"/.cfg
+	git clone --bare "$dotfilesrepo" "/home/$name/.cfg"
 
-	mkdir /home/"$name"/.config-backup
+	mkdir -p "/home/$name/.config-backup"
+	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout
 
-	/usr/bin/git --git-dir=/home/"$name"/.cfg/ --work-tree=/home/"$name" checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} /home/"$name"/.config-backup/{}
+	if [ $? = 0 ]; then
+		echo "Checked out config.";
+	else
+		echo "Backing up pre-existing dot files.";
+		/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} "/home/$name/.config-backup/"{}
+	fi;
 
-	/usr/bin/git --git-dir=/home/"$name"/.cfg/ --work-tree=/home/"$name" checkout
-	/usr/bin/git --git-dir=/home/"$name"/.cfg/ --work-tree=/home/"$name" config status.showUntrackedFiles no
+	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout
+	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" config status.showUntrackedFiles no
+	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" remote set-url origin "$dotfilesrepossh"
 
-	/usr/bin/git --git-dir=/home/"$name"/.cfg/ --work-tree=/home/"$name" remote set-url origin git@github.com:curzes/.dot-test.git
-
-	# rm -rf /home/"$name"/.config-backup
-
-	mkdir /home/"$name"/Downloads
-	mkdir /home/"$name"/session
+	mkdir "/home/"$name"/Downloads"
+	mkdir "/home/"$name"/session"
 }
 
 systembeepoff() { dialog --infobox "Getting rid of that retarded error beep sound..." 10 50

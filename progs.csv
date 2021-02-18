@@ -61,7 +61,7 @@ G,https://github.com/curzes/dmenu.git,runs commands and provides a UI for select
 G,https://github.com/curzes/st.git,is my custom build of suckless's terminal emulator.
 G,https://github.com/curzes/dwm.git,is the window manager.
 A,mutt-wizard-git,is a light-weight terminal-based email system.
-",slock,""allows you to lock your computer, and quickly unlock with your password."""
+,slock,allows you to lock your computer, and quickly unlock with your password.
 ,firefox,browser
 ,python-pip,python installer
 ,ranger,filemanager
@@ -72,7 +72,8 @@ A,mutt-wizard-git,is a light-weight terminal-based email system.
 ,gvfs-mtp,mount usbs in nautilus
 A,svtplay-dl,video downloader
 ,jmtpfs,mount usbs in nautilus
-,ytcc,yousube subscription
+A,ytcc,yousube subscription
+A,nestopia,NES EMU
 A,code-git,visual code
 ,arduino,arduino shit
 ,arduino-docs,arduino shit
