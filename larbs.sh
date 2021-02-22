@@ -79,12 +79,12 @@ newperms() { # Set special sudoers settings for install (or after).
 }
 
 bootloadersetup(){
-	pacman --noconfirm -S gptfdisk syslinux
-	syslinux-install_update -iam
+	pacman --noconfirm -S gptfdisk syslinux >/dev/null 2>&1
+	syslinux-install_update -iam >/dev/null 2>&1
 	sed -i 's/UI menu.c32/#UI menu.c32/g' /boot/syslinux/syslinux.cfg
 	sed -i 's/root=\/dev\/sda3 rw/cryptdevice=\/dev\/sda2:root root=\/dev\/mapper\/root rw quiet loglevel=3 vga=current/g' /boot/syslinux/syslinux.cfg
 	sed -i 's/block filesystems/block encrypt filesystems/g' /etc/mkinitcpio.conf
-	mkinitcpio -p linux
+	mkinitcpio -p linux >/dev/null 2>&1
 }
 
 setlanguage(){
@@ -92,7 +92,7 @@ setlanguage(){
 	sed -i 's/#en_US ISO-8859-1/en_US ISO-8859-1/g' /etc/locale.gen
 	sed -i 's/#sv_SE.UTF-8 UTF-8/sv_SE.UTF-8 UTF-8/g' /etc/locale.gen
 	sed -i 's/#sv_SE ISO-8859-1/sv_SE ISO-8859-1/g' /etc/locale.gen
-	locale-gen
+	locale-gen >/dev/null 2>&1
 	echo KEYMAP=sv-latin1 >> /etc/locale.conf
 	echo LANG=sv_SE.UTF-8 >> /etc/locale.conf
 	export LANG=sv_SE.UTF-8
@@ -160,24 +160,21 @@ putgitrepo() {
 
 	dialog --infobox "Downloading and installing config files..." 4 60
 
-	git clone --bare "$dotfilesrepo" "/home/$name/.cfg"
+	git clone --bare "$dotfilesrepo" "/home/$name/.cfg" >/dev/null 2>&1
 
-	mkdir -p "/home/$name/.config-backup"
-	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout
+	mkdir -p "/home/$name/.config-backup" >/dev/null 2>&1
 
-	if [ $? = 0 ]; then
-		echo "Checked out config.";
-	else
-		echo "Backing up pre-existing dot files.";
-		/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} "/home/$name/.config-backup/"{}
-	fi;
+	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout >/dev/null 2>&1
 
-	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout
-	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" config status.showUntrackedFiles no
-	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" remote set-url origin "$dotfilesrepossh"
+	rm -rf "/home/$name/*" >/dev/null 2>&1
+	rm -rf "/home/$name/.*" >/dev/null 2>&1
 
-	mkdir "/home/"$name"/Downloads"
-	mkdir "/home/"$name"/session"
+	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout >/dev/null 2>&1
+	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" config status.showUntrackedFiles no >/dev/null 2>&1
+	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" remote set-url origin "$dotfilesrepossh" >/dev/null 2>&1
+
+	mkdir "/home/"$name"/Downloads" >/dev/null 2>&1
+	mkdir "/home/"$name"/session" >/dev/null 2>&1
 }
 
 systembeepoff() { dialog --infobox "Getting rid of that retarded error beep sound..." 10 50
