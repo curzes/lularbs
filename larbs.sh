@@ -166,8 +166,8 @@ putgitrepo() {
 
 	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout >/dev/null 2>&1
 
-	rm -rf "/home/$name/*" >/dev/null 2>&1
-	rm -rf "/home/$name/.*" >/dev/null 2>&1
+	rm -rf "/home/$name/*" >/dev/null 2> /dev/null
+	rm -rf "/home/$name/.*" >/dev/null 2> /dev/null
 
 	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout >/dev/null 2>&1
 	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" config status.showUntrackedFiles no >/dev/null 2>&1
