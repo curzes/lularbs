@@ -164,17 +164,15 @@ putgitrepo() {
 
 	mkdir -p "/home/$name/.config-backup" >/dev/null 2>&1
 
-	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout >/dev/null 2>&1
-
-	rm -rf "/home/$name/*" >/dev/null 2> /dev/null
-	rm -rf "/home/$name/.*" >/dev/null 2> /dev/null
+	sudo rm -rf "/home/$name/*" >/dev/null 2>&1
+	sudo rm -rf "/home/$name/.*" >/dev/null 2>&1
 
 	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout >/dev/null 2>&1
 	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" config status.showUntrackedFiles no >/dev/null 2>&1
 	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" remote set-url origin "$dotfilesrepossh" >/dev/null 2>&1
 
 	mkdir "/home/"$name"/Downloads" >/dev/null 2>&1
-	mkdir "/home/"$name"/session" >/dev/null 2>&1
+	mkdir "/home/"$name"/Downloads/session" >/dev/null 2>&1
 }
 
 systembeepoff() { dialog --infobox "Getting rid of that retarded error beep sound..." 10 50
