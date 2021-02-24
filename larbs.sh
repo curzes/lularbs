@@ -160,17 +160,17 @@ putgitrepo() {
 
 	dialog --infobox "Downloading and installing config files..." 4 60
 
-	rm -rf "/home/$name/.bash_profile"
-	rm -rf "/home/$name/.bashrc"
+	rm -rf "/home/$name/.bash_profile" >/dev/null 2>&1
+	rm -rf "/home/$name/.bashrc" >/dev/null 2>&1
 
-	git clone --bare "$dotfilesrepo" "/home/$name/.cfg"
+	git clone --bare "$dotfilesrepo" "/home/$name/.cfg" >/dev/null 2>&1
 
-	git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout
-	git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" config status.showUntrackedFiles no
-	git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" remote set-url origin "$dotfilesrepossh"
+	git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout >/dev/null 2>&1
+	git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" config status.showUntrackedFiles no >/dev/null 2>&1
+	git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" remote set-url origin "$dotfilesrepossh" >/dev/null 2>&1
 
-	mkdir "/home/"$name"/Downloads"
-	mkdir "/home/"$name"/Downloads/session"
+	mkdir "/home/"$name"/Downloads" >/dev/null 2>&1
+	mkdir "/home/"$name"/Downloads/session" >/dev/null 2>&1
 }
 
 systembeepoff() { dialog --infobox "Getting rid of that retarded error beep sound..." 10 50
@@ -241,10 +241,10 @@ manualinstall $aurhelper || error "Failed to install AUR helper."
 # installs each needed program the way required. Be sure to run this only after
 # the user has been created and has priviledges to run sudo without a password
 # and all build dependencies are installed.
-# installationloop
+installationloop
 
-#dialog --title "LARBS Installation" --infobox "Finally, installing \`libxft-bgra\` to enable color emoji in suckless software without crashes." 5 70
-# yes | sudo -u "$name" $aurhelper -S libxft-bgra-git >/dev/null 2>&1
+dialog --title "LARBS Installation" --infobox "Finally, installing \`libxft-bgra\` to enable color emoji in suckless software without crashes." 5 70
+yes | sudo -u "$name" $aurhelper -S libxft-bgra-git >/dev/null 2>&1
 
 # Install the dotfiles in the user's home directory
 putgitrepo "$dotfilesrepo" "/home/$name" "$repobranch"
@@ -252,35 +252,35 @@ rm -f "/home/$name/README.md" "/home/$name/LICENSE" "/home/$name/FUNDING.yml"
 # make git ignore deleted LICENSE & README.md files
 git update-index --assume-unchanged "/home/$name/README.md" "/home/$name/LICENSE" "/home/$name/FUNDING.yml"
 
-## Most important command! Get rid of the beep!
-#systembeepoff
+# Most important command! Get rid of the beep!
+systembeepoff
 
-## Make zsh the default shell for the user.
-#chsh -s /bin/bash "$name" >/dev/null 2>&1
-#sudo -u "$name" mkdir -p "/home/$name/.cache/bash/"
+# Make zsh the default shell for the user.
+chsh -s /bin/bash "$name" >/dev/null 2>&1
+sudo -u "$name" mkdir -p "/home/$name/.cache/bash/"
 
-## dbus UUID must be generated for Artix runit.
-#dbus-uuidgen > /var/lib/dbus/machine-id
+# dbus UUID must be generated for Artix runit.
+dbus-uuidgen > /var/lib/dbus/machine-id
 
 # Tap to click
-#[ ! -f /etc/X11/xorg.conf.d/40-libinput.conf ] && printf 'Section "InputClass"
-#        Identifier "libinput touchpad catchall"
-#        MatchIsTouchpad "on"
-#        MatchDevicePath "/dev/input/event*"
-#        Driver "libinput"
-#	# Enable left mouse button by tapping
-#	Option "Tapping" "on"
-#EndSection' > /etc/X11/xorg.conf.d/40-libinput.conf
+[ ! -f /etc/X11/xorg.conf.d/40-libinput.conf ] && printf 'Section "InputClass"
+        Identifier "libinput touchpad catchall"
+        MatchIsTouchpad "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "libinput"
+	# Enable left mouse button by tapping
+	Option "Tapping" "on"
+EndSection' > /etc/X11/xorg.conf.d/40-libinput.conf
 
-## Fix fluidsynth/pulseaudio issue.
-#grep -q "OTHER_OPTS='-a pulseaudio -m alsa_seq -r 48000'" /etc/conf.d/fluidsynth ||
-#	echo "OTHER_OPTS='-a pulseaudio -m alsa_seq -r 48000'" >> /etc/conf.d/fluidsynth
-#
-## Start/restart PulseAudio.
-#killall pulseaudio; sudo -u "$name" pulseaudio --start
+# Fix fluidsynth/pulseaudio issue.
+grep -q "OTHER_OPTS='-a pulseaudio -m alsa_seq -r 48000'" /etc/conf.d/fluidsynth ||
+	echo "OTHER_OPTS='-a pulseaudio -m alsa_seq -r 48000'" >> /etc/conf.d/fluidsynth
+
+# Start/restart PulseAudio.
+killall pulseaudio; sudo -u "$name" pulseaudio --start
 
 # Enable network
-#systemctl enable NetworkManager.service
+systemctl enable NetworkManager.service
 
 # This line, overwriting the `newperms` command above will allow the user to run
 # serveral important commands, `shutdown`, `reboot`, updating, etc. without a password.
@@ -288,5 +288,5 @@ git update-index --assume-unchanged "/home/$name/README.md" "/home/$name/LICENSE
 # %wheel ALL=(ALL) NOPASSWD: /usr/bin/shutdown,/usr/bin/reboot,/usr/bin/systemctl suspend,/usr/bin/wifi-menu,/usr/bin/mount,/usr/bin/umount,/usr/bin/pacman -Syu,/usr/bin/pacman -Syyu,/usr/bin/packer -Syu,/usr/bin/packer -Syyu,/usr/bin/systemctl restart NetworkManager,/usr/bin/rc-service NetworkManager restart,/usr/bin/pacman -Syyu --noconfirm,/usr/bin/loadkeys,/usr/bin/yay,/usr/bin/pacman -Syyuw --noconfirm"
 
 # Last message! Install complete!
-#finalize
-#clear
+finalize
+clear
