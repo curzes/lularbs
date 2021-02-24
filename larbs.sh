@@ -160,16 +160,14 @@ putgitrepo() {
 
 	dialog --infobox "Downloading and installing config files..." 4 60
 
+	rm -rf "/home/$name/*"
+	rm -rf "/home/$name/.*"
+
 	git clone --bare "$dotfilesrepo" "/home/$name/.cfg"
 
-	mkdir -p "/home/$name/.config-backup"
-
-	sudo rm -rf "/home/$name/*"
-	sudo rm -rf "/home/$name/.*"
-
-	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout
-	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" config status.showUntrackedFiles no
-	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" remote set-url origin "$dotfilesrepossh"
+	git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout
+	git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" config status.showUntrackedFiles no
+	git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" remote set-url origin "$dotfilesrepossh"
 
 	mkdir "/home/"$name"/Downloads"
 	mkdir "/home/"$name"/Downloads/session"
