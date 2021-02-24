@@ -160,8 +160,8 @@ putgitrepo() {
 
 	dialog --infobox "Downloading and installing config files..." 4 60
 
-	rm -rf "/home/$name/*"
-	rm -rf "/home/$name/.*"
+	rm -rf "/home/$name/.bash_profile"
+	rm -rf "/home/$name/.bashrc"
 
 	git clone --bare "$dotfilesrepo" "/home/$name/.cfg"
 
