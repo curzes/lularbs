@@ -160,19 +160,19 @@ putgitrepo() {
 
 	dialog --infobox "Downloading and installing config files..." 4 60
 
-	git clone --bare "$dotfilesrepo" "/home/$name/.cfg" >/dev/null 2>&1
+	git clone --bare "$dotfilesrepo" "/home/$name/.cfg"
 
-	mkdir -p "/home/$name/.config-backup" >/dev/null 2>&1
+	mkdir -p "/home/$name/.config-backup"
 
-	sudo rm -rf "/home/$name/*" >/dev/null 2>&1
-	sudo rm -rf "/home/$name/.*" >/dev/null 2>&1
+	sudo rm -rf "/home/$name/*"
+	sudo rm -rf "/home/$name/.*"
 
-	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout >/dev/null 2>&1
-	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" config status.showUntrackedFiles no >/dev/null 2>&1
-	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" remote set-url origin "$dotfilesrepossh" >/dev/null 2>&1
+	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout
+	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" config status.showUntrackedFiles no
+	/usr/bin/git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" remote set-url origin "$dotfilesrepossh"
 
-	mkdir "/home/"$name"/Downloads" >/dev/null 2>&1
-	mkdir "/home/"$name"/Downloads/session" >/dev/null 2>&1
+	mkdir "/home/"$name"/Downloads"
+	mkdir "/home/"$name"/Downloads/session"
 }
 
 systembeepoff() { dialog --infobox "Getting rid of that retarded error beep sound..." 10 50
@@ -243,10 +243,10 @@ manualinstall $aurhelper || error "Failed to install AUR helper."
 # installs each needed program the way required. Be sure to run this only after
 # the user has been created and has priviledges to run sudo without a password
 # and all build dependencies are installed.
-installationloop
+# installationloop
 
-dialog --title "LARBS Installation" --infobox "Finally, installing \`libxft-bgra\` to enable color emoji in suckless software without crashes." 5 70
-yes | sudo -u "$name" $aurhelper -S libxft-bgra-git >/dev/null 2>&1
+#dialog --title "LARBS Installation" --infobox "Finally, installing \`libxft-bgra\` to enable color emoji in suckless software without crashes." 5 70
+# yes | sudo -u "$name" $aurhelper -S libxft-bgra-git >/dev/null 2>&1
 
 # Install the dotfiles in the user's home directory
 putgitrepo "$dotfilesrepo" "/home/$name" "$repobranch"
