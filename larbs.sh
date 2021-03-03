@@ -158,16 +158,16 @@ installationloop() { \
 putgitrepo() {
 	# Downloads a gitrepo $1 and places the files in $2 only overwriting conflicts
 
-	dialog --infobox "Downloading and installing config files..." 4 60
+	# dialog --infobox "Downloading and installing config files..." 4 60
 
-	rm -rf "/home/$name/.bash_profile" >/dev/null 2>&1
-	rm -rf "/home/$name/.bashrc" >/dev/null 2>&1
+	# rm -rf "/home/$name/.bash_profile" >/dev/null 2>&1
+	# rm -rf "/home/$name/.bashrc" >/dev/null 2>&1
 
-	git clone --bare "$dotfilesrepo" "/home/$name/.cfg" >/dev/null 2>&1
+	# git clone --bare "$dotfilesrepo" "/home/$name/.cfg" >/dev/null 2>&1
 
-	git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout >/dev/null 2>&1
-	git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" config status.showUntrackedFiles no >/dev/null 2>&1
-	git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" remote set-url origin "$dotfilesrepossh" >/dev/null 2>&1
+	# git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" checkout >/dev/null 2>&1
+	# git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" config status.showUntrackedFiles no >/dev/null 2>&1
+	# git --git-dir="/home/$name/.cfg/" --work-tree="/home/$name" remote set-url origin "$dotfilesrepossh" >/dev/null 2>&1
 
 	mkdir "/home/"$name"/Downloads" >/dev/null 2>&1
 	mkdir "/home/"$name"/Downloads/session" >/dev/null 2>&1
@@ -247,10 +247,10 @@ dialog --title "LARBS Installation" --infobox "Finally, installing \`libxft-bgra
 yes | sudo -u "$name" $aurhelper -S libxft-bgra-git >/dev/null 2>&1
 
 # Install the dotfiles in the user's home directory
-putgitrepo "$dotfilesrepo" "/home/$name" "$repobranch"
-rm -f "/home/$name/README.md" "/home/$name/LICENSE" "/home/$name/FUNDING.yml"
+# putgitrepo "$dotfilesrepo" "/home/$name" "$repobranch"
+# rm -f "/home/$name/README.md" "/home/$name/LICENSE" "/home/$name/FUNDING.yml"
 # make git ignore deleted LICENSE & README.md files
-git update-index --assume-unchanged "/home/$name/README.md" "/home/$name/LICENSE" "/home/$name/FUNDING.yml"
+# git update-index --assume-unchanged "/home/$name/README.md" "/home/$name/LICENSE" "/home/$name/FUNDING.yml"
 
 # Most important command! Get rid of the beep!
 systembeepoff
