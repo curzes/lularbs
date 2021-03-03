@@ -3,6 +3,7 @@
 ,xorg-xwininfo,allows querying information about windows.
 ,xorg-xinit,starts the graphical server.
 ,ttf-linux-libertine,provides the sans and serif fonts for LARBS.
+A,libxft-bgra,Patched version of libXft which supports color emoji
 ,ttf-liberation,fonts
 ,git,
 A,lf-git,is an extensive terminal file manager that everyone likes.
@@ -75,7 +76,7 @@ A,svtplay-dl,video downloader
 ,jmtpfs,mount usbs in nautilus
 A,ytcc,yousube subscription
 A,nestopia,NES EMU
-A,code-git,visual code
+A,code,visual code
 ,arduino,arduino shit
 ,arduino-docs,arduino shit
 ,arduino-avr-core,arduino shit
